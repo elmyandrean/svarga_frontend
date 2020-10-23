@@ -525,7 +525,7 @@
 								<div class="product-wrapper mb-40">
 									<div class="product-img">
 										<a href="#">
-											<img src="{{asset('myadmin/uploads/'.$product->images[0])}}" alt="product" class="primary"/>
+											<img src="{{asset('myadmin/uploads/'.$product->images[0]->name)}}" alt="product" class="primary"/>
 										</a>
 										<!-- <span class="sale">sale</span> -->
 										<div class="product-icon">
@@ -612,7 +612,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="section-title mb-30 text-center">
-								<h2>New arrival</h2>
+								<h2>Best Seller</h2>
 								<p>Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas. </p>
 							</div>
 						</div>
