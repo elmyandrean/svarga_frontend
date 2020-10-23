@@ -506,9 +506,9 @@
 							<!-- tab-menu-start -->
 							<div class="tab-menu mb-50 text-center">
 								<ul class="nav">
-                                    @foreach($categories as $category)
-                                    <li><a href="#{{$category->id}}" data-toggle="tab">{{$category->name}}</a></li>
-                                    @endforeach
+                                    @for($i = 0; $i < count($categories); $i++)
+                                    <li><a class="{{ $i == 0 ? 'active' : '' }}" href="#cat{{$categories[$i]->id}}" data-toggle="tab">{{$categories[$i]->name}}</a></li>
+                                    @endfor
 								</ul>
 							</div>
 							<!-- tab-menu-end -->
@@ -516,84 +516,51 @@
 					</div>		
 					<!-- tab-area-start -->
 					<div class="tab-content">
-                        @for($i = 0; $i < count($categories); $i++)
-                        <div class="tab-pane {{$i == 1 ? 'active' : ''}}" id="{{$categories[$i]->id}}">
-                            <div class="product-active owl-carousel">
-                                <div class="product-wrapper-all">
-                                    <!-- product-wrapper-start -->
-                                    <div class="product-wrapper mb-40">
-                                        <div class="product-img">
-                                            <a href="#">
-                                                <img src="{{asset('library/assets/product/1/1.jpg')}}" alt="product" class="primary"/>
-                                                <img src="{{asset('library/assets/product/1/2.jpg')}}" alt="product" class="secondary"/>
-                                            </a>
-                                            <span class="sale">sale</span>
-                                            <div class="product-icon">
-                                                <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="icon ion-bag"></i></a>
-                                                <a href="#" data-toggle="tooltip" title="Compare this Product"><i class="icon ion-android-options"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#mymodal" title="Quick View"><i class="icon ion-android-open"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content pt-20">
-                                            <div class="manufacture-product">
-                                                <a href="#">Armani</a>
-                                                <div class="rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <h2><a href="product-details.html">Premium Skipping Rope Svarga 3 Meter  Tali Skipping Speed Rope - Hitam</a></h2>
-                                            <div class="price">
-                                                <ul>
-                                                    <li class="new-price">$122.00</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- product-wrapper-end -->
-                                    <!-- product-wrapper-start -->
-                                    <div class="product-wrapper">
-                                        <div class="product-img">
-                                            <a href="#">
-                                                <img src="{{asset('library/assets/product/2/1.jpg')}}" alt="product" class="primary"/>
-                                                <img src="{{asset('library/assets/product/2/2.jpg')}}" alt="product" class="secondary"/>
-                                            </a>
-                                            <span class="sale">sale</span>
-                                            <div class="product-icon">
-                                                <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="icon ion-bag"></i></a>
-                                                <a href="#" data-toggle="tooltip" title="Compare this Product"><i class="icon ion-android-options"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#mymodal" title="Quick View"><i class="icon ion-android-open"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content pt-20">
-                                            <div class="manufacture-product">
-                                                <a href="#">Chanel</a>
-                                                <div class="rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <h2><a href="product-details.html">Premium Yoga Mat Bag  Tas Yoga Besar  Yoga Bag  Mat ukuran 1mm-8mm - The Leaves</a></h2>
-                                            <div class="price">
-                                                <ul>
-                                                    <li class="new-price">$122.00</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- product-wrapper-end -->
-                                </div>
-                            </div>
+                        @for($a = 0; $a < count($categories); $a++)
+                        <div class="tab-pane {{$a == 0 ? 'active' : ''}}" id="cat{{$categories[$a]->id}}">
+							@if(count($categories[$a]->products->where('status', 1)->where('deleted', 0)) > 0)
+							<div class="product-active owl-carousel">
+								@foreach($categories[$a]->products->where('status', 1)->where('deleted', 0) as $product)
+								<!-- product-wrapper-start -->
+								<div class="product-wrapper mb-40">
+									<div class="product-img">
+										<a href="#">
+											<img src="{{asset('myadmin/uploads/'.$product->images[0])}}" alt="product" class="primary"/>
+										</a>
+										<!-- <span class="sale">sale</span> -->
+										<div class="product-icon">
+											<a href="#" data-toggle="tooltip" title="Add to Cart"><i class="icon ion-bag"></i></a>
+											<a href="#" data-toggle="tooltip" title="Compare this Product"><i class="icon ion-android-options"></i></a>
+											<a href="#" data-toggle="modal" data-target="#mymodal" title="Quick View"><i class="icon ion-android-open"></i></a>
+										</div>
+									</div>
+									<div class="product-content pt-20">
+										<div class="manufacture-product">
+											<a href="#">{{ $product->category->name }}</a>
+											<div class="rating">
+												<ul>
+													<li><a href="#"><i class="fa fa-star"></i></a></li>
+													<li><a href="#"><i class="fa fa-star"></i></a></li>
+													<li><a href="#"><i class="fa fa-star"></i></a></li>
+													<li><a href="#"><i class="fa fa-star"></i></a></li>
+													<li><a href="#"><i class="fa fa-star"></i></a></li>
+												</ul>
+											</div>
+										</div>
+										<h2><a href="product-details.html">{{ $product->name }}</a></h2>
+										<div class="price">
+											<ul>
+												<li class="new-price">Rp {{ number_format($product->price, 0, '', '.') }}</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- product-wrapper-end -->
+								@endforeach
+							</div>
+							@else
+							<h2 class="text-center">Produk dikategori ini belum ada.</h2>
+							@endif
                         </div>
                         @endfor
 					</div>
